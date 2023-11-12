@@ -63,7 +63,7 @@ export default {
            
 
             <div class="card " style="width: 18rem;margin: 0px 5px; border:none" v-for="(element,index) in this.mostPopular_items" @mouseover="hover" @mouseout="hide">
-                <img class="card-img-top pic" :src="element.image" alt="Card image cap" style="width:100%;margin:0">
+                <img class="card-img-top pic" :src="element.image" alt="Card image cap" style="width:100%;margin:0" @click="goDetail" :movieId="element.id">
                 <div class="card-body hidden" >
                 <p class="card-text">{{element.fullTitle}}</p>
                 </div>
@@ -113,7 +113,7 @@ export default {
             style="padding: 20px"
           >
             <div class="card " style="width: 18rem;margin: 0px 5px;border:none" v-for="(element,index) in this.top_50_items" >
-                <img class="card-img-top pic" :src="element.image" alt="Card image cap" style="width:100%;margin:0" @mouseover="hover" @mouseout="hide">
+                <img class="card-img-top pic" :src="element.image" alt="Card image cap" style="width:100%;margin:0" @mouseover="hover" @mouseout="hide" @click="goDetail" :movieId="element.id">
                 <div class="card-body hidden">
                 <p class="card-text" >{{element.fullTitle}}</p>
                 </div>
@@ -304,10 +304,7 @@ export default {
     },
     hide(e) {
       $(e.target).next().addClass("hidden");
-    }
-
-
-
+    },
   },
   created() {
     // db_utility.fetch(this.mostPopularRequest).then(data => {
