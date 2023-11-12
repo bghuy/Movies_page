@@ -92,6 +92,7 @@ let db_utility = {
                     items: searchMovies
                 }
                 result.total_page = Math.ceil(result.total / result.per_page)
+                console.log(result.items)
                 resolve(result);
             }
         })

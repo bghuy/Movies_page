@@ -7,6 +7,8 @@ export default {
                 <img class="card-img-top pic" :src="element.image" alt="Card image cap" style="width:100%;margin:0">
                 <div class="card-body" style="text-align:center">
                 <p class="card-text">{{element.fullTitle}}</p>
+                <p class="card-text">{{element.runtimeStr}}</p>
+                <p class="card-text">{{'imDb ' + " "+ element.ratings.imDb}}</p>
                 </div>
             </div>
         </div>
