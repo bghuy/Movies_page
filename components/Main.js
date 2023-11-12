@@ -4,7 +4,7 @@ import Search from "./Main_components/search_component.js"
 export default {
 
     template: `
-        <Home v-if="mainName === 'home'"/> 
+        <Home v-if="mainName === 'home'" :is-night="this.isNight"/> 
         <Search v-if="mainName === 'search'"/>
     `,
     data() {
@@ -21,5 +21,8 @@ export default {
     },
     components: {
         Home, Search
+    },
+    props: {
+        isNight: Boolean,
     },
 }

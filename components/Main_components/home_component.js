@@ -7,13 +7,13 @@ export default {
     <div class="carousel-inner">
       <div
         class="carousel-item active d-flex justify-content-center"
-        style="padding: 20px"
+        style="padding: 20px;position:relative"
       >
         <img
-          :src="this.mostIncome_img[this.mostIncome_page-1]" style="width:auto;height:auto"
+          :src="this.mostIncome_img[this.mostIncome_page-1]"
           class="pic"
           alt="..."
-          style="width: 26%"
+          style="width: 26%;height:auto"
           loading="lazy"
         />
       </div>
@@ -53,9 +53,9 @@ export default {
 
 
     <div id="mostPopular-wp">
-      <h3 style="padding:10px">Most Popular</h3>
+      <h3 style="padding:10px" :style="colorStyle">Most Popular</h3>
       <div id="carouselExample" class="carousel slide" style="width: 100%">
-        <div class="carousel-inner">
+        <div class="carousel-inner" >
           <div
             class="carousel-item active d-flex justify-content-center"
             style="padding: 20px"
@@ -104,7 +104,7 @@ export default {
 
 
     <div id="topRating-wp">
-      <h3 style="padding:10px">Top Rating</h3>
+      <h3 style="padding:10px" :style="colorStyle">Top Rating</h3>
       <div id="carouselExample" class="carousel slide" style="width: 100%">
         <div class="carousel-inner">
           <div
@@ -171,6 +171,7 @@ export default {
       mostIncome_img: [],
       mostIncome_page: 1,
       mostIncome_per_page: 1,
+      darkOn: false
     }
   },
   methods: {
@@ -260,7 +261,7 @@ export default {
         this.mostIncome.items.forEach(element => {
           this.mostIncome_img.push(element.image);
         });
-        console.log(this.mostIncome_img)
+
 
       }
       catch (error) {
@@ -288,8 +289,15 @@ export default {
     this.requestMostPopularPage();
     this.requestMostTop50();
     this.requestMostIncome();
-
-
-
-  }
+  },
+  props: {
+    isNight: Boolean,
+  },
+  computed: {
+    colorStyle() {
+      return {
+        color: this.isNight ? 'white' : 'black',
+      };
+    },
+  },
 }

@@ -22,6 +22,7 @@ let db_utility = {
         return new Promise((resolve, reject) => {
             if (type === "get" && className === "mostpopular") {
                 const movieList = data.MostPopularMovies.slice(0, 20);
+                console.log(movieList)
                 let result = {
                     search: type,
                     page: parseInt(page),
@@ -71,7 +72,27 @@ let db_utility = {
                 }
 
                 result.total_page = Math.ceil(result.items.length / result.per_page)
-                console.log(result)
+                resolve(result);
+            }
+            else if (type === "search" && className === "movie" && pattern.length > 0) {
+                const movieList = data.Movies;
+                let searchMovies = movieList.filter(function (movie) {
+                    if (movie.fullTitle.indexOf(pattern) !== -1) {
+                        return true;
+                    }
+                    else {
+                        return false
+                    }
+                });
+                let result = {
+                    search: type,
+                    page: parseInt(page),
+                    per_page: parseInt(per_page),
+                    total: parseInt(searchMovies.length),
+                    total_page: 1,
+                    items: searchMovies
+                }
+                result.total_page = Math.ceil(result.total / result.per_page)
                 resolve(result);
             }
         })
