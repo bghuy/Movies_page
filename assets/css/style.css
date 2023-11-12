@@ -97,6 +97,14 @@ input:checked+.slider:before {
 
 }
 
-.pic:hover {
+.card:hover {
   transform: scale(1.15);
+}
+
+.hidden {
+  display: none;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }

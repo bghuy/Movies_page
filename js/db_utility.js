@@ -22,7 +22,6 @@ let db_utility = {
         return new Promise((resolve, reject) => {
             if (type === "get" && className === "mostpopular") {
                 const movieList = data.MostPopularMovies.slice(0, 20);
-                console.log(movieList)
                 let result = {
                     search: type,
                     page: parseInt(page),
@@ -77,7 +76,7 @@ let db_utility = {
             else if (type === "search" && className === "movie" && pattern.length > 0) {
                 const movieList = data.Movies;
                 let searchMovies = movieList.filter(function (movie) {
-                    if (movie.fullTitle.indexOf(pattern) !== -1) {
+                    if (movie.fullTitle.toLowerCase().indexOf(pattern.toLowerCase()) !== -1) {
                         return true;
                     }
                     else {

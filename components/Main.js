@@ -1,15 +1,14 @@
 
 import Home from "./Main_components/home_component.js"
-import Search from "./Main_components/search_component.js"
 export default {
 
     template: `
-        <Home v-if="mainName === 'home'" :is-night="this.isNight"/> 
-        <Search v-if="mainName === 'search'"/>
+        <Home v-if="this.mainComponentName === 'home'" :is-night="this.isNight"/> 
     `,
     data() {
         return {
-            mainName: "home"
+            mainName: this.mainComponentName,
+            searchValue: this.mSearchValue
         }
     },
     methods: {
@@ -20,9 +19,12 @@ export default {
 
     },
     components: {
-        Home, Search
+        Home
     },
     props: {
-        isNight: Boolean,
+        isNight: Boolean, mainComponentName: String, mSearchValue: String
     },
+    created() {
+
+    }
 }

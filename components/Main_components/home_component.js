@@ -10,12 +10,12 @@ export default {
         style="padding: 20px;position:relative"
       >
         <img
-          :src="this.mostIncome_img[this.mostIncome_page-1]"
-          class="pic"
-          alt="..."
-          style="width: 26%;height:auto"
-          loading="lazy"
-        />
+        :src="this.mostIncome_img[this.mostIncome_page-1]"
+        class="pic"
+        alt="..."
+        style="width: 26%;height:auto"
+        loading="lazy"
+      />
       </div>
     </div>
     <button
@@ -60,14 +60,15 @@ export default {
             class="carousel-item active d-flex justify-content-center"
             style="padding: 20px"
           >
-            <img
-              v-for="imgUrl in this.mostPopularImg"
-              :src="imgUrl"
-              class="pic"
-              alt="..."
-              style="width: 26%"
-              loading="lazy"
-            />
+           
+
+            <div class="card " style="width: 18rem;margin: 0px 5px; border:none" v-for="(element,index) in this.mostPopular_items" @mouseover="hover" @mouseout="hide">
+                <img class="card-img-top pic" :src="element.image" alt="Card image cap" style="width:100%;margin:0">
+                <div class="card-body hidden" >
+                <p class="card-text">{{element.fullTitle}}</p>
+                </div>
+            </div>
+
           </div>
         </div>
         <button
@@ -111,14 +112,13 @@ export default {
             class="carousel-item active d-flex justify-content-center"
             style="padding: 20px"
           >
-            <img
-              v-for="imgUrl in this.top_50_Img"
-              :src="imgUrl"
-              class="pic"
-              alt="..."
-              style="width: 26%"
-              loading="lazy"
-            />
+            <div class="card " style="width: 18rem;margin: 0px 5px;border:none" v-for="(element,index) in this.top_50_items" >
+                <img class="card-img-top pic" :src="element.image" alt="Card image cap" style="width:100%;margin:0" @mouseover="hover" @mouseout="hide">
+                <div class="card-body hidden">
+                <p class="card-text" >{{element.fullTitle}}</p>
+                </div>
+            </div>
+            
           </div>
         </div>
         <button
@@ -171,7 +171,10 @@ export default {
       mostIncome_img: [],
       mostIncome_page: 1,
       mostIncome_per_page: 1,
-      darkOn: false
+      darkOn: false,
+      top_50_items: [],
+      mostPopular_items: [],
+      mostIncome_items: []
     }
   },
   methods: {
@@ -188,6 +191,10 @@ export default {
       for (let i = startIndex; i < endIndex; i++) {
         this.mostPopularImg.push(this.mostPopular.items[i].image)
       }
+      this.mostPopular_items = []
+      for (let i = startIndex; i < endIndex; i++) {
+        this.mostPopular_items.push(this.mostPopular.items[i])
+      }
     },
 
     async requestMostPopularPage() {
@@ -200,6 +207,9 @@ export default {
         const endIndex = startIndex + this.per_page;
         for (let i = startIndex; i < endIndex; i++) {
           this.mostPopularImg.push(this.mostPopular.items[i].image)
+        }
+        for (let i = startIndex; i < endIndex; i++) {
+          this.mostPopular_items.push(this.mostPopular.items[i])
         }
       }
       catch (error) {
@@ -223,6 +233,10 @@ export default {
       for (let i = startIndex; i < endIndex; i++) {
         this.top_50_Img.push(this.top_50.items[i].image)
       }
+      this.top_50_items = []
+      for (let i = startIndex; i < endIndex; i++) {
+        this.top_50_items.push(this.top_50.items[i])
+      }
     },
     async requestMostTop50() {
       try {
@@ -232,8 +246,12 @@ export default {
         this.top_50_per_page = this.top_50.per_page;
         const startIndex = (this.top_50_page - 1) * this.top_50_per_page;
         const endIndex = startIndex + this.top_50_per_page;
+
         for (let i = startIndex; i < endIndex; i++) {
           this.top_50_Img.push(this.top_50.items[i].image)
+        }
+        for (let i = startIndex; i < endIndex; i++) {
+          this.top_50_items.push(this.top_50.items[i])
         }
       }
       catch (error) {
@@ -250,6 +268,10 @@ export default {
       if (this.mostIncome_page < 1 || this.mostIncome_page > this.mostIncome.total_page) {
         this.mostIncome_page = pre;
       }
+      mostIncome_items = []
+      this.mostIncome.items.forEach(element => {
+        this.mostIncome_items.push(element);
+      });
     },
 
     async requestMostIncome() {
@@ -261,6 +283,11 @@ export default {
         this.mostIncome.items.forEach(element => {
           this.mostIncome_img.push(element.image);
         });
+        this.mostIncome.items.forEach(element => {
+          this.mostIncome_items.push(element);
+        });
+        console.log(this.mostIncome_items[0].image)
+
 
 
       }
@@ -272,6 +299,14 @@ export default {
       }
 
     },
+    hover(e) {
+      $(e.target).next().removeClass("hidden");
+    },
+    hide(e) {
+      $(e.target).next().addClass("hidden");
+    }
+
+
 
   },
   created() {
